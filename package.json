@@ -1,0 +1,14 @@
+{
+  "name": "serverestautomation",
+  "version": "1.0.0",
+  "description": "Test Automation for Serve Rest API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leonardo Oliveira",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^13.6.6"
+  }
+}

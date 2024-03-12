@@ -1,0 +1,4 @@
+# Ignore node_modules directory
+node_modules/
+
+# Other rules can be added here as needed
