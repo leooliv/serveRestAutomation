@@ -1,10 +1,10 @@
 const { faker } = require('@faker-js/faker')
 
-describe('Serve Rest API - Testando os endpoints de Usuários', () => {
+describe('Serve Rest API - Validando os endpoints de Usuários', () => {
   let userId
 
   it('Deveria criar um usuário com sucesso', () => {
-    cy.request('POST', `${API_URL}/usuarios`, {
+    cy.request('POST', `${Cypress.env('API_URL')}/usuarios`, {
       nome: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -23,7 +23,7 @@ describe('Serve Rest API - Testando os endpoints de Usuários', () => {
   })
 
   it('Deveria fazer a listagem de usuários na API', () => {
-    cy.request('GET', 'https://serverest.dev/usuarios').then((response) => {
+    cy.request('GET', `${Cypress.env('API_URL')}/usuarios`).then((response) => {
       expect(response.body.quantidade).to.exist
       expect(response.body.usuarios).to.exist
     })

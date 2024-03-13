@@ -1,5 +1,5 @@
 # Serve Rest Automation
-Repository for evaluation test
+Repositorio para teste técnico
 
 cypress/javascript project.
 
@@ -12,7 +12,39 @@ cypress/javascript project.
 
 ## Requirements
 
-Download Node dependencies
+Faça o download das dependências do Node
 
-* have an ide installed on the machine, vscode used.
-* run the command `npm install` at the root of the project.
+* Tenha uma IDE instalada no seu computador, utilizada para o teste: VSCode.
+* Rode o comando `npm install` na raiz do projeto para instalar todas as dependências.
+
+### serveRestAutomation\cypress\e2e
+
+|  Recurso                       |  Descrição                                               |
+|-----------------------------|--------------------------------------------------|
+| `cenario-1.cy.js`           | API tests para o primeiro cenário                |
+| `cenario-2.cy.js`           | API tests para o segundo cenário                 |
+| `login-tests.cy.js`         | Arquivo para testar alguns endpoints da API      |
+| `product-tests.cy.js`       | Arquivo para testar alguns endpoints da API      |
+
+### serveRestAutomation\cypress\screenshots
+
+* Pasta onde a automação guarda os prints da tela dos testes que falharam
+
+### serveRestAutomation\cypress\support
+
+|  Recurso                       |  Descrição                                               |
+|--------------------------------|----------------------------------------------------------|
+| `commands.js`                  | Arquivo para adicionar comandos adicionais ao cypress    |
+| `e2e.js`                       | Arquivo para importar comando globais do cypress         |
+
+### Rode os Testes
+
+| Tipo de Teste     | Linha de Comando                                          |
+|-------------------|-----------------------------------------------------------|
+| API Test          | `npm test`                                                |
+
+
+### Resultado dos Testes
+
+É possível conferir o resultado dos testes através do terminal
+

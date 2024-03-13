@@ -1,10 +1,6 @@
-require('dotenv').config()
-
 const { faker } = require('@faker-js/faker')
-const API_URL = process.env.API_URL
-console.log(API_URL)
 
-describe('Validar o processo de criação de um carrinho para um novo usuário', () => {
+describe('Validando o processo de criação de um carrinho para um novo usuário', () => {
   const user = {
     name: faker.person.fullName(),
     email: faker.internet.email(),
@@ -20,7 +16,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   }
 
   it('Deveria criar um usuário com sucesso', () => {
-    cy.request('POST', `${API_URL}/usuarios`, {
+    cy.request('POST', `${Cypress.env('API_URL')}/usuarios`, {
       nome: `${user.name}`,
       email: `${user.email}`,
       password: `${user.password}`,
@@ -38,7 +34,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   })
 
   it('Deveria realizar o login desse usuário com sucesso', () => {
-    cy.request('POST', `${API_URL}/login`, {
+    cy.request('POST', `${Cypress.env('API_URL')}/login`, {
       email: `${user.email}`,
       password: `${user.password}`,
     }).then((response) => {
@@ -54,7 +50,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria criar o produto 1 com sucesso utilizando o token do novo usuário', () => {
     cy.request({
       method: 'POST',
-      url: 'https://serverest.dev/produtos',
+      url: `${Cypress.env('API_URL')}/produtos`,
       headers: {
         Authorization: `${user.token}`,
       },
@@ -77,9 +73,9 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria criar o produto 2 com sucesso utilizando o token do novo usuário', () => {
     cy.request({
       method: 'POST',
-      url: 'https://serverest.dev/produtos',
+      url: `${Cypress.env('API_URL')}/produtos`,
       headers: {
-        Authorization: `${userToken}`,
+        Authorization: `${user.token}`,
       },
       body: {
         nome: faker.commerce.productName(),
@@ -100,7 +96,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria criar um carrinho novo adicionando os 2 produtos novos', () => {
     cy.request({
       method: 'POST',
-      url: `https://serverest.dev/carrinhos`,
+      url: `${Cypress.env('API_URL')}/carrinhos`,
       headers: {
         Authorization: `${user.token}`,
       },
@@ -126,7 +122,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria concluir a compra e finalizar o carrinho', () => {
     cy.request({
       method: 'DELETE',
-      url: `https://serverest.dev/carrinhos/concluir-compra`,
+      url: `${Cypress.env('API_URL')}/carrinhos/concluir-compra`,
       headers: {
         Authorization: `${user.token}`,
       },
@@ -138,7 +134,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   })
 
   it('Deveria encontrar um produto 1 pelo iD e confirmar o desconto na quantidade', () => {
-    cy.request('GET', `https://serverest.dev/produtos/${product.id1}`).then(
+    cy.request('GET', `${Cypress.env('API_URL')}/produtos/${product.id1}`).then(
       (response) => {
         expect(response.body._id).to.exist
         expect(response.body.quantidade).to.equal(product.quantity1 - 2)
@@ -147,7 +143,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   })
 
   it('Deveria encontrar um produto 2 pelo iD e confirmar o desconto na quantidade', () => {
-    cy.request('GET', `https://serverest.dev/produtos/${product.id2}`).then(
+    cy.request('GET', `${Cypress.env('API_URL')}/produtos/${product.id2}`).then(
       (response) => {
         expect(response.body._id).to.exist
         expect(response.body.quantidade).to.equal(product.quantity2 - 2)
@@ -158,7 +154,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria deletar o produto 1 criado para o teste com sucesso', () => {
     cy.request({
       method: 'DELETE',
-      url: `https://serverest.dev/produtos/${product.id1}`,
+      url: `${Cypress.env('API_URL')}/produtos/${product.id1}`,
       headers: {
         Authorization: `${user.token}`,
       },
@@ -172,7 +168,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria deletar o produto 2 criado para o teste com sucesso', () => {
     cy.request({
       method: 'DELETE',
-      url: `https://serverest.dev/produtos/${product.id2}`,
+      url: `${Cypress.env('API_URL')}/produtos/${product.id2}`,
       headers: {
         Authorization: `${user.token}`,
       },
@@ -184,7 +180,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   })
 
   it('Deveria deletar um usuário com sucesso', () => {
-    cy.request('DELETE', `https://serverest.dev/usuarios/${user.id}`)
+    cy.request('DELETE', `${Cypress.env('API_URL')}/usuarios/${user.id}`)
       .its('body')
       .should('include', {
         message: 'Registro excluído com sucesso',
