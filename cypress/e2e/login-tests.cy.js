@@ -1,3 +1,5 @@
+let apiToken
+
 describe('Serve Rest API - Testando os endpoints de Login', () => {
   it('Deveria realizar o login com sucesso', () => {
     cy.request('POST', 'https://serverest.dev/login', {
