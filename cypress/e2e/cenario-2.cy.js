@@ -1,20 +1,29 @@
+require('dotenv').config()
+
 const { faker } = require('@faker-js/faker')
+const API_URL = process.env.API_URL
+console.log(API_URL)
 
 describe('Validar o processo de criação de um carrinho para um novo usuário', () => {
-  let userEmail = faker.internet.email()
-  let userPassword = faker.internet.password()
-  let userToken = ''
-  let userId
-  let productId1
-  let productId2
-  let product1Quantity = faker.number.int({ min: 20, max: 1000 })
-  let product2Quantity = faker.number.int({ min: 20, max: 1000 })
+  const user = {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    token: '',
+    id: '',
+  }
+  const product = {
+    id1: '',
+    id2: '',
+    quantity1: faker.number.int({ min: 20, max: 1000 }),
+    quantity2: faker.number.int({ min: 20, max: 1000 }),
+  }
 
   it('Deveria criar um usuário com sucesso', () => {
-    cy.request('POST', 'https://serverest.dev/usuarios', {
-      nome: faker.person.fullName(),
-      email: `${userEmail}`,
-      password: `${userPassword}`,
+    cy.request('POST', `${API_URL}/usuarios`, {
+      nome: `${user.name}`,
+      email: `${user.email}`,
+      password: `${user.password}`,
       administrador: 'true',
     }).then((response) => {
       expect(response.status).to.equal(201)
@@ -24,21 +33,21 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
       })
 
       expect(response.body._id).to.exist
-      userId = response.body._id
+      user.id = response.body._id
     })
   })
 
   it('Deveria realizar o login desse usuário com sucesso', () => {
-    cy.request('POST', 'https://serverest.dev/login', {
-      email: `${userEmail}`,
-      password: `${userPassword}`,
+    cy.request('POST', `${API_URL}/login`, {
+      email: `${user.email}`,
+      password: `${user.password}`,
     }).then((response) => {
       expect(response.body).to.include({
         message: 'Login realizado com sucesso',
       })
 
       expect(response.body.authorization).to.exist
-      userToken = response.body.authorization
+      user.token = response.body.authorization
     })
   })
 
@@ -47,13 +56,13 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
       method: 'POST',
       url: 'https://serverest.dev/produtos',
       headers: {
-        Authorization: `${userToken}`,
+        Authorization: `${user.token}`,
       },
       body: {
         nome: faker.commerce.productName(),
         preco: faker.number.int({ min: 20, max: 5000 }),
         descricao: faker.commerce.product(),
-        quantidade: product1Quantity,
+        quantidade: product.quantity1,
       },
     }).then((response) => {
       expect(response.body).to.include({
@@ -61,7 +70,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
       })
 
       expect(response.body._id).to.exist
-      productId1 = response.body._id
+      product.id1 = response.body._id
     })
   })
 
@@ -76,7 +85,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
         nome: faker.commerce.productName(),
         preco: faker.number.int({ min: 20, max: 5000 }),
         descricao: faker.commerce.product(),
-        quantidade: product2Quantity,
+        quantidade: product.quantity2,
       },
     }).then((response) => {
       expect(response.body).to.include({
@@ -84,7 +93,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
       })
 
       expect(response.body._id).to.exist
-      productId2 = response.body._id
+      product.id2 = response.body._id
     })
   })
 
@@ -93,16 +102,16 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
       method: 'POST',
       url: `https://serverest.dev/carrinhos`,
       headers: {
-        Authorization: `${userToken}`,
+        Authorization: `${user.token}`,
       },
       body: {
         produtos: [
           {
-            idProduto: `${productId1}`,
+            idProduto: `${product.id1}`,
             quantidade: 2,
           },
           {
-            idProduto: `${productId2}`,
+            idProduto: `${product.id2}`,
             quantidade: 2,
           },
         ],
@@ -119,7 +128,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
       method: 'DELETE',
       url: `https://serverest.dev/carrinhos/concluir-compra`,
       headers: {
-        Authorization: `${userToken}`,
+        Authorization: `${user.token}`,
       },
     }).then((response) => {
       expect(response.body).to.include({
@@ -129,19 +138,19 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   })
 
   it('Deveria encontrar um produto 1 pelo iD e confirmar o desconto na quantidade', () => {
-    cy.request('GET', `https://serverest.dev/produtos/${productId1}`).then(
+    cy.request('GET', `https://serverest.dev/produtos/${product.id1}`).then(
       (response) => {
         expect(response.body._id).to.exist
-        expect(response.body.quantidade).to.equal(product1Quantity - 2)
+        expect(response.body.quantidade).to.equal(product.quantity1 - 2)
       },
     )
   })
 
   it('Deveria encontrar um produto 2 pelo iD e confirmar o desconto na quantidade', () => {
-    cy.request('GET', `https://serverest.dev/produtos/${productId2}`).then(
+    cy.request('GET', `https://serverest.dev/produtos/${product.id2}`).then(
       (response) => {
         expect(response.body._id).to.exist
-        expect(response.body.quantidade).to.equal(product2Quantity - 2)
+        expect(response.body.quantidade).to.equal(product.quantity2 - 2)
       },
     )
   })
@@ -149,9 +158,9 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria deletar o produto 1 criado para o teste com sucesso', () => {
     cy.request({
       method: 'DELETE',
-      url: `https://serverest.dev/produtos/${productId1}`,
+      url: `https://serverest.dev/produtos/${product.id1}`,
       headers: {
-        Authorization: `${userToken}`,
+        Authorization: `${user.token}`,
       },
     }).then((response) => {
       expect(response.body).to.include({
@@ -163,9 +172,9 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   it('Deveria deletar o produto 2 criado para o teste com sucesso', () => {
     cy.request({
       method: 'DELETE',
-      url: `https://serverest.dev/produtos/${productId2}`,
+      url: `https://serverest.dev/produtos/${product.id2}`,
       headers: {
-        Authorization: `${userToken}`,
+        Authorization: `${user.token}`,
       },
     }).then((response) => {
       expect(response.body).to.include({
@@ -175,7 +184,7 @@ describe('Validar o processo de criação de um carrinho para um novo usuário',
   })
 
   it('Deveria deletar um usuário com sucesso', () => {
-    cy.request('DELETE', `https://serverest.dev/usuarios/${userId}`)
+    cy.request('DELETE', `https://serverest.dev/usuarios/${user.id}`)
       .its('body')
       .should('include', {
         message: 'Registro excluído com sucesso',

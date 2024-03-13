@@ -4,7 +4,7 @@ describe('Serve Rest API - Testando os endpoints de Usuários', () => {
   let userId
 
   it('Deveria criar um usuário com sucesso', () => {
-    cy.request('POST', 'https://serverest.dev/usuarios', {
+    cy.request('POST', `${API_URL}/usuarios`, {
       nome: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
