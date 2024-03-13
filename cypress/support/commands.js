@@ -23,3 +23,8 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('setAuthToken', (token) => {
+  cy.intercept({ url: '**/**' }, (req) => {
+    req.headers['Authorization'] = `Bearer ${token}`
+  })
+})
