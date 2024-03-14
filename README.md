@@ -1,5 +1,5 @@
 # Serve Rest Automation
-Repositorio para teste técnico
+Repositório para teste técnico
 
 cypress/javascript project.
 
@@ -25,10 +25,6 @@ Faça o download das dependências do Node
 | `cenario-2.cy.js`           | API tests para o segundo cenário                 |
 | `login-tests.cy.js`         | Arquivo para testar alguns endpoints da API      |
 | `product-tests.cy.js`       | Arquivo para testar alguns endpoints da API      |
-
-### serveRestAutomation\cypress\screenshots
-
-* Pasta onde a automação guarda os prints da tela dos testes que falharam
 
 ### serveRestAutomation\cypress\support
 

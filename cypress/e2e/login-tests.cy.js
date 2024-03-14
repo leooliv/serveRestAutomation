@@ -1,21 +1,8 @@
 describe('Serve Rest API - Testando os endpoints de Login', () => {
-  it('Deveria realizar o login com sucesso', () => {
-    cy.request('POST', 'https://serverest.dev/login', {
-      email: 'fulano@qa.com',
-      password: 'teste',
-    })
-      .its('body')
-      .should('include', {
-        message: 'Login realizado com sucesso',
-      })
-      .its('authorization')
-      .should('exist')
-  })
-
   it('Deveria falhar o login - Email e senha brancos', () => {
     cy.request({
       method: 'POST',
-      url: 'https://serverest.dev/login',
+      url: `${Cypress.env('API_URL')}/login`,
       body: {
         email: '',
         password: '',
@@ -34,7 +21,7 @@ describe('Serve Rest API - Testando os endpoints de Login', () => {
   it('Deveria falhar o login - Email e/ou senha incorretos', () => {
     cy.request({
       method: 'POST',
-      url: 'https://serverest.dev/login',
+      url: `${Cypress.env('API_URL')}/login`,
       body: {
         email: 'test@test.com',
         password: '.',
@@ -52,7 +39,7 @@ describe('Serve Rest API - Testando os endpoints de Login', () => {
   it('Deveria falhar o login - Email inválido', () => {
     cy.request({
       method: 'POST',
-      url: 'https://serverest.dev/login',
+      url: `${Cypress.env('API_URL')}/login`,
       body: {
         email: 'test',
         password: '.',

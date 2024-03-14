@@ -30,7 +30,7 @@ describe('Serve Rest API - Validando os endpoints de Usuários', () => {
   })
 
   it('Deveria encontrar um usuário pelo iD com sucesso', () => {
-    cy.request('GET', `https://serverest.dev/usuarios/${userId}`).then(
+    cy.request('GET', `${Cypress.env('API_URL')}/usuarios/${userId}`).then(
       (response) => {
         expect(response.body.nome).to.exist
         expect(response.body.email).to.exist
@@ -42,7 +42,7 @@ describe('Serve Rest API - Validando os endpoints de Usuários', () => {
   })
 
   it('Deveria editar o registro de um usuário com sucesso', () => {
-    cy.request('PUT', `https://serverest.dev/usuarios/${userId}`, {
+    cy.request('PUT', `${Cypress.env('API_URL')}/usuarios/${userId}`, {
       nome: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -57,7 +57,7 @@ describe('Serve Rest API - Validando os endpoints de Usuários', () => {
   })
 
   it('Deveria deletar um usuário com sucesso', () => {
-    cy.request('DELETE', `https://serverest.dev/usuarios/${userId}`)
+    cy.request('DELETE', `${Cypress.env('API_URL')}/usuarios/${userId}`)
       .its('body')
       .should('include', {
         message: 'Registro excluído com sucesso',
