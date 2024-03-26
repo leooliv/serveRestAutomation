@@ -5,7 +5,6 @@ cypress/javascript project.
 
 ## Tools used
 
-* NVM 1.1.11
 * NodeJS v18.16.0
 * NPM 8.1.2
 * Cypress 13.6.6
@@ -24,7 +23,6 @@ Faça o download das dependências do Node
 | `cenario-1.cy.js`           | API tests para o primeiro cenário                |
 | `cenario-2.cy.js`           | API tests para o segundo cenário                 |
 | `login-tests.cy.js`         | Arquivo para testar alguns endpoints da API      |
-| `product-tests.cy.js`       | Arquivo para testar alguns endpoints da API      |
 
 ### serveRestAutomation\cypress\support
 
@@ -34,6 +32,8 @@ Faça o download das dependências do Node
 | `e2e.js`                       | Arquivo para importar comando globais do cypress         |
 
 ### Rode os Testes
+
+Na pasta raiz do projeto rode o seguinte comando no terminal para executar os cenários
 
 | Tipo de Teste     | Linha de Comando                                          |
 |-------------------|-----------------------------------------------------------|

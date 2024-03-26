@@ -7,9 +7,3 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-
-Cypress.Commands.add('setAuthToken', (token) => {
-  cy.intercept({ url: '**/**' }, (req) => {
-    req.headers['Authorization'] = `Bearer ${token}`
-  })
-})
