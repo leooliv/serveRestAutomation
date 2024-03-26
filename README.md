@@ -30,6 +30,7 @@ Faça o download das dependências do Node
 |--------------------------------|----------------------------------------------------------|
 | `commands.js`                  | Arquivo para adicionar comandos adicionais ao cypress    |
 | `e2e.js`                       | Arquivo para importar comando globais do cypress         |
+| `..\..\cypress.config.js`      | Arquivo para definir variáveis globais do cypress        |
 
 ### Rode os Testes
 
