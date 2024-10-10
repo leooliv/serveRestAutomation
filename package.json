@@ -4,13 +4,17 @@
   "description": "Test Automation for Serve Rest API",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run --spec 'cypress/e2e/*' --headless"
+    "test": "cypress run --spec 'cypress/e2e/*' --headed"
   },
   "author": "Leonardo Oliveira",
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "cypress": "^13.6.6",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "serverestautomation": "file:"
+  },
+  "devDependencies": {
+    "cypress-xpath": "^2.0.1"
   }
 }
