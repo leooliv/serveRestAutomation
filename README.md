@@ -18,11 +18,12 @@ Faça o download das dependências do Node
 
 ### serveRestAutomation\cypress\e2e
 
-|  Recurso                       |  Descrição                                               |
-|-----------------------------|--------------------------------------------------|
-| `cenario-1.cy.js`           | API tests para o primeiro cenário                |
-| `cenario-2.cy.js`           | API tests para o segundo cenário                 |
-| `login-tests.cy.js`         | Arquivo para testar alguns endpoints da API      |
+|  Recurso                       |  Descrição                                       |
+|--------------------------------|--------------------------------------------------|
+| `apiLoginTest.cy.js`           | API tests para casos relacionados a login        |
+| `apiTestsCart.cy.js`           | API tests para casos relacionado ao carrinho     |
+| `apiTestsUser.cy.js`           | API tests para casos relacionado ao usuário      |
+| `frontTests.cy.js`             | Testes para o frontend da aplicação              |
 
 ### serveRestAutomation\cypress\support
 
@@ -36,12 +37,12 @@ Faça o download das dependências do Node
 
 Na pasta raiz do projeto rode o seguinte comando no terminal para executar os cenários
 
-| Tipo de Teste     | Linha de Comando                                          |
-|-------------------|-----------------------------------------------------------|
-| API Test          | `npm test`                                                |
+| Tipo de Teste           | Linha de Comando                                          |
+|-------------------------|-----------------------------------------------------------|
+| API/Front Test          | `npm test`                                                |
 
 
 ### Resultado dos Testes
 
-É possível conferir o resultado dos testes através do terminal
+É possível conferir o resultado dos testes através do terminal e pelo GUI
 
